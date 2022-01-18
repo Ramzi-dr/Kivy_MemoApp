@@ -1,0 +1,475 @@
+WindowManager:
+    LandingPage:
+        name: 'landing'
+    #ImageChooserPage:
+      #  name:'ImageChooser'
+
+    Scroll:
+        name:'game'
+
+<LandingPage>:
+    id: LandingPage
+    orientation: 'vertical'
+    canvas.before:
+        Color:
+            rgba: 119 / 250.0, 77 / 250.0, 98 / 250.0, 0.8
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'appFoto/l1.jpg'
+    BoxLayout:
+        padding: 0, 10, 0, 0
+        orientation: 'horizontal'
+        Button:
+            id: up_button
+            canvas:
+                Color:
+                    rgba: 149 / 250.0, 77 / 250.0, 114 / 250.0, 0.5
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            size_hint_x: .7
+            size_hint_y: .1
+            pos_hint: {'center_x': .5, 'y': .9}
+            text: "dRiDi MemOry"
+            bold: True
+            font_size: self.width / 20
+            on_release : root.exit_app()#root.reset_landing()
+
+    BoxLayout:
+        padding: 100, 0, 100, 0
+        orientation: 'horizontal'
+        Label:
+            id: dridi
+            canvas:
+                Color:
+                    rgba: 149 / 250.0, 77 / 250.0, 114 / 250.0, 0.1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            size_hint_x: .8
+            size_hint_y: .1
+            pos_hint: {'center_x': .5, 'y': .3}
+            text: "wElke dRidI bEn jiJ?"
+            color: (173 / 255, 132 / 255, 153 / 255, 1)
+            font_size: self.width / 15
+
+    BoxLayout:
+        orientation: 'horizontal'
+        pos_hint: {'center_x': .5, 'y': .2}
+        size_hint: .5, .1
+        padding: 0, 10, 0, 0
+        TextInput:
+            id: name_input
+            background_color: (0, 0, 0, .5)
+            foreground_color: (149 / 250.0, 77 / 250.0, 114 / 250.0, .8)
+            canvas.after:
+                Color:
+                    rgba: 149 / 250.0, 77 / 250.0, 114 / 250.0, 0.1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [58]
+            write_tab: False
+            focus: True
+            halign: 'center'
+            #valign: 'center'
+            hint_text: root.hint_text
+            on_text_validate: root.start_bt()
+            on_text_validate: root.startPlay()
+            multiline: False
+            font_size: self.width / 12
+
+    BoxLayout:
+        orientation: 'horizontal'
+        pos_hint: {'center_x': .5, 'y': .1}
+        size_hint: .2, .1
+        padding: 0, 20, 0, 0
+        RoundedButton:
+            id: start_bt
+            text: 'Start'
+            font_size: self.width / 5
+            color: (56 / 255, 10 / 255, 33 / 255, 1)
+            on_press:
+                root.start_bt()
+                #root.startPlay()
+
+
+
+<RoundedButton@Button>
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (149 / 250.0, 77 / 250.0, 114 / 250.0, .8)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [58]
+
+
+<Scroll>:
+
+    id: scroll
+    canvas:
+        Color:
+            rgba: 149 / 250.0, 77 / 250.0, 114 / 250.0, 0.9
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        spacing:7    
+        padding:10
+        size_hint:(1,0.1)
+        pos_hint:{'top':1,'left':1}
+        
+        Label:
+            id: score
+            text: root.score
+        Label:
+            id: level
+            text: root.level
+        Label:
+            id: time_
+            size_hint: (1.0, 0.83)
+            text: '00:00:00'
+              
+    BoxLayout:
+        orientation:'vertical'
+        size_hint:(1,0.9)
+        BoxLayout:
+            id:box
+            padding:10,10,10,10
+            GamePage:
+
+
+        BoxLayout:
+            spacing:7    
+            padding:0,10,0,10
+            size_hint:(.5,0.1)
+            pos_hint: {'center_y': 0.1, 'center_x': 0.5}    
+
+            Button:
+                size_hint: (1.0, 0.83)
+                id: pause
+                text: 'Pause'
+                background_color: (1.0, 0.5, 0.9, 0.5)
+                on_press:
+                    root.on_pause_timer()
+
+            Button:
+                size_hint: (1.0, 0.83)
+                id: stop_game
+                text: 'Stop'
+                background_color: (1.0, 0.5, 0.9, 0.5)
+                on_press:
+                    app.stop()
+                   
+        BoxLayout:
+            
+            padding:0,0,0,10
+            size_hint:(.5,0.1)
+            pos_hint: {'center_y': 0.1, 'center_x': 0.5} 
+            Label:
+                text : 'met liefde gemaakt MemoGame V.1 '
+    
+
+<PopupYouWin>:
+    canvas.before:
+        Color:
+            rgba: 221 / 250.0, 74 / 250.0, 72/ 250.0, 0.8
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        text: "Hooraaaa You Win !"
+        halign: 'center'
+        valign: 'middle'
+        text_size : self.width,None
+        size_hint: 1, 0.3
+        pos_hint: {"x":0.0, "top":1}
+    Button:
+        id: play_again
+        text: "klik hier als je nog een keer wilt spelen"
+        halign: 'center'
+        valign: 'middle'
+        size_hint: 1, 0.3
+        pos_hint: {"x":0.0, "top":0.7}
+        text_size : self.width,None
+        background_color: 79/255, 9/255,29/255,1
+        on_press: root.play_again()
+
+    Button:
+        id: exit
+        text: "klik hier als je het spel wilt verlaten"
+        halign: 'center'
+        valign: 'middle'
+        size_hint: 1, 0.3
+        pos_hint: {"x":0.0, "top":0.3}
+        text_size : self.width,None
+        background_color: 79/255, 9/255,29/255,1
+        on_press: app.stop()
+
+
+
+<PopupFotoSelectionEmpltyList>:
+    canvas.before:
+        Color:
+            rgba: 222/ 250.0, 131/250.0, 77/250.0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        id: gamer
+        text: root.gamer
+        halign: 'center'
+        valign: 'middle'
+        text_size : self.width,None
+        size_hint: 1, 0.5
+        pos_hint: {"x":0.0, "top":1}
+    Button:
+        id: new_selection_bt
+        text: "klik hier om foto's toe te voegen"
+        halign: 'center'
+        valign: 'middle'
+        size_hint: 1, 0.5
+        pos_hint: {"x":0.0, "top":0.5}
+        text_size : self.width,None
+        background_color: 163/255, 66/255, 60/255,1
+
+
+   
+    
+
+<PopupFotoSelect>:
+    canvas.before:
+        Color:
+            rgba: 222/ 250.0, 131/250.0, 77/250.0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        id: hallo_gamer
+        text: root.hallo_gamer
+        halign: 'center'
+        valign: 'middle'
+        text_size : self.width,None
+        size_hint: 1, 0.2
+        pos_hint: {"x":0.0, "top":1}
+    Button:
+        id: start_selection_bt
+        text: "klik hier om foto's toe te voegen"
+        halign: 'center'
+        valign: 'middle'
+        size_hint: 1, 0.35
+        pos_hint: {"x":0.0, "top":0.7}
+        text_size : self.width,None
+        background_color: 163/255, 66/255, 60/255,1
+    Button:
+        id: same_image_bt
+        text: "klik hier om de bestaande foto's te gebruiken"
+        halign: 'center'
+        valign: 'middle'
+        size_hint: 1, 0.35
+        pos_hint: {"x":0.0, "top":0.35}
+        text_size : self.width,None
+        background_color: 221/255, 74/255, 72/255,0.7
+    
+<PopupFullList>:
+    canvas.before:
+        Color:
+            rgba: 78/ 250.0, 159 / 250.0, 61/ 250.0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        text: "goed gedaan, we hebben 25 foto's!"
+        halign: 'center'
+        valign: 'middle'
+        text_size : self.width,None
+        size_hint: 1, 0.5
+        pos_hint: {"x":0.0, "top":1}
+    Button:
+        id: start_game_bt
+        text: "klik hier om het spel te starten"
+        halign: 'center'
+        valign: 'middle'
+        size_hint: 1, 0.5
+        pos_hint: {"x":0.0, "top":0.5}
+        text_size : self.width,None
+        background_color: 30/255, 81/255,40/255,1
+
+<PopupFotoError>:
+    canvas.before:
+        Color:
+            rgba: 221 / 250.0, 74 / 250.0, 72/ 250.0, 0.8
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        text: "maar dit is geen foto!"
+        halign: 'center'
+        valign: 'middle'
+        text_size : self.width,None
+        size_hint: 1, 0.5
+        pos_hint: {"x":0.0, "top":1}
+    Button:
+        id: dismiss_bt
+        text: "klik hier om terug te gaan"
+        halign: 'center'
+        valign: 'middle'
+        size_hint: 1, 0.5
+        pos_hint: {"x":0.0, "top":0.5}
+        text_size : self.width,None
+        background_color: 79/255, 9/255,29/255,1
+
+<PopupFotoInList>:
+    canvas.before:
+        Color:
+            rgba: 221 / 250.0, 74 / 250.0, 72/ 250.0, 0.8
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        text: "deze foto staat al in de lijst !"
+        halign: 'center'
+        valign: 'middle'
+        text_size : self.width,None
+        size_hint: 1, 0.5
+        pos_hint: {"x":0.0, "top":1}
+    Button:
+        id: foto_in_list
+        text: "klik hier om terug te gaan"
+        halign: 'center'
+        valign: 'middle'
+        size_hint: 1, 0.5
+        pos_hint: {"x":0.0, "top":0.5}
+        text_size : self.width,None
+        background_color: 79/255, 9/255,29/255,1
+
+
+
+<PopupExitApp>:
+    canvas.before:
+        Color:
+            rgba: 84/ 250.0, 65 / 250.0, 121/ 250.0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        text: "weet je zeker dat je het spel wilt verlaten?!"
+        halign: 'center'
+        valign: 'middle'
+        text_size : self.width,None
+        size_hint: 1, 0.5
+        pos_hint: {"x":0.0, "top":1}
+    Button:
+        id: no_exit_bt
+        text: "neen"
+        halign: 'center'
+        valign: 'middle'
+        size_hint: 1, 0.2
+        pos_hint: {"x":0.0, "top":0.5}
+        text_size : self.width,None
+        background_color: 97/255, 102/255,179/255,1
+
+    Button:
+        id: yes_exit_bt
+        text: "Ja"
+        halign: 'center'
+        valign: 'middle'
+        size_hint: 1, 0.2
+        pos_hint: {"x":0.0, "top":0.3}
+        text_size : self.width,None
+        background_color: 50/255, 193/255,205/255,1
+        on_release: app.stop()
+
+<PopupInfoFotoInList>:
+    canvas.before:
+        Color:
+            rgba: 6/ 250.0, 70/ 250.0, 53/ 250.0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        text: "je hebt deze foto al geselecteerd!"
+        halign: 'center'
+        valign: 'middle'
+        text_size : self.width,None
+        size_hint: 1, 0.5
+        pos_hint: {"x":0.0, "top":1}
+    Button:
+        id: back_to_selection
+        text: "kies een andere"
+        halign: 'center'
+        valign: 'middle'
+        size_hint: 1, 0.2
+        pos_hint: {"x":0.0, "top":0.5}
+        text_size : self.width,None
+        background_color: 81/255, 146/255,89/255,1
+
+
+
+
+
+
+<ImageChooserPage@BoxLayout>
+  
+    orientation: 'horizontal'
+    
+    canvas.before:
+        Color:
+            rgba: 119 / 250.0, 77 / 250.0, 98 / 250.0, 0.8
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    StackLayout:
+        spacing: 7
+        padding: 10,10,10,40
+        Button:
+            id: foto_1
+            size_hint: 0.2, 0.2
+            background_normal: 'appFoto/remember.webp'
+            on_press:   
+                if self.background_normal=='appFoto/remember.webp': root.file_chooser()
+                else: root.foto_pass()
+            on_release:
+                if self.background_normal=='appFoto/remember.webp': root.update('foto_1')
+                else: root.foto_pass() 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+
+
+    
+
+            
+
+            
+
+
+ 
+           
+         
+
+            
+
+
+
+
+                
+
+
+
